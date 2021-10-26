@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <Header @toggle-add-task="toggleAddTask" title="Task tracker" :showAddTask="showAddTask"/>
+    <Header
+      @toggle-add-task="toggleAddTask"
+      title="Task tracker"
+      :showAddTask="showAddTask"
+    />
     <div v-show="showAddTask">
       <AddTask @add-task="addTask" />
     </div>
@@ -30,7 +34,11 @@ export default {
     };
   },
   methods: {
-     async addTask(task) {
+    toggleAddTask() {
+      this.showAddTask = !this.showAddTask;
+    },
+
+    async addTask(task) {
       const res = await fetch("api/tasks", {
         method: "POST",
         headers: {
@@ -77,9 +85,9 @@ export default {
       return data;
     },
   },
-   async created() {
+  async created() {
     this.tasks = await this.fetchTasks();
-    console.log(this.tasks)
+    console.log(this.tasks);
   },
 };
 </script>
